@@ -16,7 +16,7 @@ describe("Just a sample test suite", function(){
         let a = 10;
         let b = 10;
         let c = a/b;
-        assert.equal(c, 20);
+        assert.equal(c, 1);
     });
 
 });
