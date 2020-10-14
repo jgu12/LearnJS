@@ -19,12 +19,13 @@
   },
   "homepage": "https://github.com/jgu12/LearnJS#readme",
   "dependencies": {
+    "ejs": "^2.5.2",
     "express": "^4.17.1",
+    "mocha": "^8.1.3",
     "mongodb": "^3.6.2",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "mocha": "^8.1.3"
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@babel/node": "^7.x",

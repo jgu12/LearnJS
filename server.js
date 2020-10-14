@@ -1,4 +1,5 @@
-// look for config.js at same level, '../' for going up a level 
+// look for config.js at same level, '../' for going up a level
+// {} - destructure for importing none-default exports
 import config, {nodeEnv, logLines, sayHi} from './config';
 
 //>>>>>> node https way
@@ -6,7 +7,6 @@ import config, {nodeEnv, logLines, sayHi} from './config';
 // https.get('https://www.lynda.com', res=>{
 //     console.log("response status code: ", res.statusCode)
 // });
-
 
 //>>>> node http way
 // import http from 'http';
@@ -22,7 +22,6 @@ import config, {nodeEnv, logLines, sayHi} from './config';
 //     }, 3000);
 // });
 
-
 //>>>>using express
 import express from 'express';
 const server = express();
@@ -32,9 +31,9 @@ server.listen(config.port, ()=>{
 });
 
 //express to handle routes
-server.get('/', (req, res) => {
-    res.send("Hello from express!!\n");
-});
+// server.get('/', (req, res) => {
+//     res.send("Hello from express!!\n");
+// });
 
 // import fs from 'fs';
 // server.get('/about.html', (req, res) => {
@@ -49,6 +48,16 @@ server.get('/', (req, res) => {
 //*in production, static content usually should be managed sepearted from server code, using tools like NGINX
 server.use(express.static('public'));
 
-
+//manage all api requests in api module, import the handler here and use with express middleware
 import apiRouter from './api';
 server.use('/api', apiRouter);
+
+
+//render ejs template
+server.set('view engine', 'ejs');
+
+server.get('/', (req, res) => {
+    res.render('index', {
+        content: 'Hello from EJS!'
+    });
+});
