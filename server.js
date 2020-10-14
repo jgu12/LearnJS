@@ -46,4 +46,9 @@ server.get('/', (req, res) => {
 
 //>>>>>using express static middleware
 //serve static assest automatically
+//*in production, static content usually should be managed sepearted from server code, using tools like NGINX
 server.use(express.static('public'));
+
+
+import apiRouter from './api';
+server.use('/api', apiRouter);
