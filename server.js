@@ -1,6 +1,6 @@
 // look for config.js at same level, '../' for going up a level
 // {} - destructure for importing none-default exports
-import config, {nodeEnv, logLines, sayHi} from './config';
+import config from './config';
 
 //>>>>using express
 import express from 'express';
@@ -10,9 +10,9 @@ server.set('view engine', 'ejs');
 
 // the order does matter here, if route handling is below server.listen(), the ejs tempalte doesn't render
 server.get('/', (req, res) => {
-    res.render('index', {
-        content: 'Hello from EJS from server.js!!'
-    });
+  res.render('index', {
+    content: 'Hello from EJS from server.js!!'
+  });
 });
 
 //>>>>>using express static middleware
@@ -24,8 +24,8 @@ server.use(express.static('public'));
 import apiRouter from './api';
 server.use('/api', apiRouter);
 
-server.listen(config.port, ()=>{
-    console.log("express is listening on port: ", config.port);
+server.listen(config.port, () => {
+  console.log('express is listening on port: ', config.port);
 });
 
 

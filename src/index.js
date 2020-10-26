@@ -13,11 +13,19 @@ import ReactDom from 'react-dom';
 //JSX to use HTML directly, with babel compling the JSX code into react - write famaliar HTML, 
 //and get benefit of react virtual dom the same time (question: which line did babel confirgue this?)
 
-const color = Math.random() > 0.5 ? 'green' : 'red';
+// const color = Math.random() > 0.5 ? 'green' : 'red';
 
+// ReactDom.render(
+//     <h2 style={{color: color}} className="text-center">
+//         Hello React from index.js by JSX!!!!  {Math.random()}
+//     </h2>,
+//     document.getElementById('root')
+// );
+
+const App = () => {
+
+};
 ReactDom.render(
-    <h2 style={{color: color}} className="text-center">
-        Hello React from index.js by JSX!!!!  {Math.random()}
-    </h2>,
-    document.getElementById('root')
+  <App />,
+  document.getElementById('root')
 );
