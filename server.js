@@ -11,7 +11,7 @@ server.set('view engine', 'ejs');
 // the order does matter here, if route handling is below server.listen(), the ejs tempalte doesn't render
 server.get('/', (req, res) => {
     res.render('index', {
-        content: 'Hello from EJS!'
+        content: 'Hello from EJS from server.js!!'
     });
 });
 
