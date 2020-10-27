@@ -56,8 +56,9 @@ import ReactDom from 'react-dom';
 
 
 import App from './components/App';
+import data from './testData';
 
 ReactDom.render(
-  <App message = 'hello react!!'/>,
+  <App message = 'hello react!!' contests={data.contests}/>,
   document.getElementById('root')
 );
