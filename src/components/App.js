@@ -33,6 +33,8 @@ class App extends React.Component {
     //   contests: data.contests
     // });
   }
+
+  //Question: the '...' operator allows an expression to be expanded in places where mutiple args are expected
   render() {
     return (
       <div className="App">
