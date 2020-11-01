@@ -1,6 +1,7 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Header from './Header';
+import ContestPreview from './ContestPreview';
 
 //if need state & lifecyle
 class App extends React.Component {
@@ -19,12 +20,22 @@ class App extends React.Component {
       <div className="App">
         <Header message={this.state.pageHeader} />
         <div>
-          .....
+          {this.props.contests.map(
+            (contest, i) => <ContestPreview {...contest} key={i}/>
+          )}
         </div>
       </div>
     );
   }
 }
+
+App.propTypes = {
+  contests: PropTypes.array.isRequired
+};
+
+export default App;
+
+
 
 // if just need stateless, use this sytanx is enough
 // const App = () => {
@@ -37,5 +48,3 @@ class App extends React.Component {
 //     </div>
 //   );
 // };
-
-export default App;

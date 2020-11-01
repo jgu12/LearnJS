@@ -1,0 +1,22 @@
+.ContestPreview {
+  margin: 1em;
+  border: 1px solid #ccc;
+
+  .category-name {
+    border-bottom: 1px solid green;
+    background-color: aqua;
+  }
+
+  .contest-name {
+    padding: 0.5em;
+  }
+
+  .contest-id {
+    background-color: brown;
+  }
+}
+
+// sass instead of plain css
+// option: 1. have webpack to translate this sass into css
+// 2. have node translate into css  -> to use it directly on server load.
+// using node sass middleware to do (2)

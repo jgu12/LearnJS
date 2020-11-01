@@ -1,14 +1,20 @@
 // look for config.js at same level, '../' for going up a level
 // {} - destructure for importing none-default exports
 import config from './config';
-
-//>>>>using express
 import express from 'express';
 const server = express();
+
+// using node sass middleware, read form ../sass and output a style.css to ../public
+import sassMiddleware from 'node-sass-middleware';
+import path from 'path';
+server.use(sassMiddleware({
+  src: path.join(__dirname, 'sass'),
+  dest: path.join(__dirname, 'public')
+}));
+
 //render ejs template
 server.set('view engine', 'ejs');
 
-// the order does matter here, if route handling is below server.listen(), the ejs tempalte doesn't render
 server.get('/', (req, res) => {
   res.render('index', {
     content: 'Hello from EJS from server.js!!'
@@ -21,11 +27,12 @@ server.get('/', (req, res) => {
 server.use(express.static('public'));
 
 //manage all api requests in api module, import the handler here and use with express middleware
+//the order does matter here, if route handling is below server.listen(), then ejs tempalte doesn't work
 import apiRouter from './api';
 server.use('/api', apiRouter);
 
 server.listen(config.port, () => {
-  console.log('express is listening on port: ', config.port);
+  console.info('express is listening on port: ', config.port);
 });
 
 
@@ -61,3 +68,4 @@ server.listen(config.port, () => {
 //         res.send(data.toString());
 //     });
 // });
+
