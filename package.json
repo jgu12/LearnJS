@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/jgu12/LearnJS#readme",
   "dependencies": {
+    "axios": "^0.21.0",
     "ejs": "^2.5.2",
     "express": "^4.17.1",
     "json-loader": "^0.5.7",
