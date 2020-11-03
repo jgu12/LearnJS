@@ -13,12 +13,13 @@ import config from './config';
 
 const serverRender = () =>
   axios.get(`${config.serverUrl}/api/contests`)
-    .then( resp => {
-      //console.log(resp.data);
-      //(2)
-      return ReactDOMServer.renderToString(
-        <App initialContests={resp.data.contests}/>
-      );
+    .then(resp => {
+      return {
+        initialData: resp.data,
+        initialMarkup: ReactDOMServer.renderToString(
+          <App initialContests={resp.data.contests}/>
+        )
+      };
     });
 
 

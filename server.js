@@ -19,8 +19,8 @@ import serverRender from './serverRender'; //just to call the function
 
 server.get('/', (req, res) => {
   serverRender()
-    .then(content => {
-      res.render('index', {content});
+    .then(({initialData, initialMarkup}) => {
+      res.render('index', {initialData, initialMarkup});  //pass both to EJS
     })
     .catch(
       console.error
