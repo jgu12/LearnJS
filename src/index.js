@@ -58,9 +58,10 @@ import ReactDom from 'react-dom';
 import App from './components/App';
 //reading data from memeory. If reading from API, it will take time, 
 //we can render the APP with empty array, and render late in Component from state 
+//and if another code is rendering the same APP but providing non-empty props, it will render with data
 // import data from './testData';
 
 ReactDom.render(
-  <App message = 'hello react!!' contests={[]}/>,
+  <App initialContests={[]} contests={[]}/>,
   document.getElementById('root')
 );

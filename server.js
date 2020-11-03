@@ -15,10 +15,19 @@ server.use(sassMiddleware({
 //render ejs template
 server.set('view engine', 'ejs');
 
+import serverRender from './serverRender'; //just to call the function
+
 server.get('/', (req, res) => {
-  res.render('index', {
-    content: 'Hello from EJS from server.js!!'
-  });
+  serverRender()
+    .then(content => {
+      res.render('index', {content});
+    })
+    .catch(
+      console.error
+    );
+  // res.render('index', {
+  //   content: 'Hello from EJS from server.js!!'
+  // });
 });
 
 //>>>>>using express static middleware
@@ -31,7 +40,8 @@ server.use(express.static('public'));
 import apiRouter from './api';
 server.use('/api', apiRouter);
 
-server.listen(config.port, () => {
+
+server.listen(config.port,  config.host, () => {
   console.info('express is listening on port: ', config.port);
 });
 

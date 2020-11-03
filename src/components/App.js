@@ -10,7 +10,7 @@ import axios from 'axios';
 class App extends React.Component {
   state = {
     pageHeader: 'Naming Contests',
-    contests: []
+    contests: this.props.initialContests  //
   };
 
   //usually do ajax fetching, when got something back from the server, 
@@ -20,11 +20,11 @@ class App extends React.Component {
     //ajax call to fetch data from remote API - using axios library
     axios.get('/api/contests')
       .then( resp => {
-        console.log('getting resp object', resp);
+        console.log('getting resp object -- inside App componetDidMount cycle', resp);
         this.setState({
           contests: resp.data.contests
         });
-      })
+      }) 
       .catch(function(error) {
         console.error(error);
       });
@@ -34,9 +34,11 @@ class App extends React.Component {
     // });
   }
 
+
   //Question: the '...' operator allows an expression to be expanded in places where mutiple args are expected
   render() {
-    return (
+    //debugger;
+    return ( 
       <div className="App">
         <Header message={this.state.pageHeader} />
         <div>
@@ -50,7 +52,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  contests: PropTypes.array.isRequired
+  contests: PropTypes.array.isRequired,
+  initialContests: PropTypes.array
 };
 
 export default App;

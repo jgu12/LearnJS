@@ -1,7 +1,6 @@
 <%- include('header') -%>
+  <!-- initially get content and render it if we have it from server.js, 
+    after js envrioment loads, react will take the 'root' div and replace content
+  this helps with server side rendering -->
   <div id="root"><%- content %></div>
 <%- include('footer') -%>
-
-<!-- initially get content and render it if we have it from server.js, 
-  after js envrioment loads, react will take the 'root' div and replace content
-this helps with server side rendering -->
