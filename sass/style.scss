@@ -16,6 +16,10 @@
   }
 }
 
+.link {
+  cursor: pointer;
+}
+
 // sass instead of plain css
 // option: 1. have webpack to translate this sass into css
 // 2. have node translate into css  -> to use it directly on server load.
