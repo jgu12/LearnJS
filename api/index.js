@@ -7,8 +7,17 @@ router.get('/', (req, res) => {
   res.send({sampleResponseJson:[1,2,3]});
 });
 
+//make an object to represnt json on server load
+const contests = data.contests.reduce((obj, contest) => {
+  obj[contest.id] = contest;
+  return obj;
+}, {}); //what's the {} for?
+
+
 router.get('/contests', (req, res) => {
-  res.send({ contests: data.contests });
+  res.send({ 
+    contests: contests
+  });
 });
 
 

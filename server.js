@@ -15,7 +15,7 @@ server.use(sassMiddleware({
 //render ejs template
 server.set('view engine', 'ejs');
 
-import serverRender from './serverRender'; //just to call the function
+import serverRender from './serverRender';
 
 server.get('/', (req, res) => {
   serverRender()

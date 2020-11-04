@@ -15,7 +15,7 @@ const serverRender = () =>
   axios.get(`${config.serverUrl}/api/contests`)
     .then(resp => {
       return {
-        initialData: resp.data,
+        initialData: resp.data,     //the api returns an object, in the resp object's data field: resp.data
         initialMarkup: ReactDOMServer.renderToString(
           <App initialContests={resp.data.contests}/>
         )
