@@ -6,6 +6,11 @@ import ContestList from './ContestList';
 import axios from 'axios';
 
 
+const pushState = (obj, url) => {
+  window.history.pushState(obj, '', url);
+};
+
+
 //if need state & lifecyle, extend react.component
 class App extends React.Component {
   state = {
@@ -34,14 +39,25 @@ class App extends React.Component {
     // });
   }
 
+  //use for everytime we click on a contest
+  fetchContest = (contestID) => {
+    pushState(
+      { currentContestID: contestID },  //save the ID received in browser.history.state
+      `/contest/${contestID}`  //url
+    );
+  }
 
   //Question: the '...' operator allows an expression to be expanded in places where mutiple args are expected
   render() {
     //debugger;
+    //pass the fetchContest func all the way to ContestPreview for its onClick
     return ( 
       <div className="App">
         <Header message={this.state.pageHeader} />
-        <ContestList contests={this.state.contests} />
+        <ContestList
+          onContestClick = {this.fetchContest}
+          contests={this.state.contests} 
+        />
       </div>
     );
   }
