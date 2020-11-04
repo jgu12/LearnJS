@@ -48,7 +48,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  contests: PropTypes.array.isRequired,
+  contests: PropTypes.array,
   initialContests: PropTypes.array
 };
 

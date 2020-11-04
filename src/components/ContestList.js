@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 const ContestList = ({contests}) => {
   return (
     <div>
-      {contests.map(
-        (contest) => <ContestPreview {...contest} key={contest.id} />
-      )}
+      {
+        contests.map( (contest) => 
+          <ContestPreview {...contest} key={contest.id} />
+        )
+      }
     </div>
   );
 };
