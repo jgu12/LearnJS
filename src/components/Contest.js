@@ -15,6 +15,9 @@ class Contest extends React.Component{
         <div className = 'contest-id'>
           {this.props.id}
         </div>
+        <div className = 'contest-description'>
+          {this.props.description}
+        </div>
       </div>
     );
   }
@@ -24,6 +27,7 @@ Contest.propTypes = {
   categoryName: PropTypes.string.isRequired,
   contestName: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  description: PropTypes.string.isRequired
 };
 
 export default Contest;

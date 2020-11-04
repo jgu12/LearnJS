@@ -4,7 +4,8 @@ import Header from './Header';
 import ContestList from './ContestList';
 // import data from '../testData'; ////for testing
 import Contest from './Contest';
-import axios from 'axios';
+import * as api from '../api.js';
+// import axios from 'axios';
 
 
 const pushState = (obj, url) => {
@@ -24,38 +25,44 @@ class App extends React.Component {
   //also timers, listeners.. and clean up in componentWillUnmount
   componentDidMount() {
     //ajax call to fetch data from remote API - using axios library - now returns an object
-    axios.get('/api/contests')
-      .then( resp => {
-        console.log('getting resp object -- inside App componetDidMount cycle', resp);
-        this.setState({
-          contests: resp.data.contests
-        });
-      }) 
-      .catch(function(error) {
-        console.error(error);
-      });
-
-    // this.setState({
-    //   contests: data.contests
-    // });
+    // axios.get('/api/contests')
+    //   .then( resp => {
+    //     console.log('getting resp object -- inside App componetDidMount cycle', resp);
+    //     this.setState({
+    //       contests: resp.data.contests
+    //     });
+    //   }) 
+    //   .catch(function(error) {
+    //     console.error(error);
+    //   });
   }
+
 
   //use for everytime we click on a contest. Pass the func all the way to ContestPreview,
   //onClick calls the func & pass in the clicked contest-id, save the id back id
   fetchContest = (contestID) => {
     pushState(
       { currentContestID: contestID },  //save the ID received in browser.history.state
-      `/contest/${contestID}`  //url
+      // `/contest/${contestID}`  //url  <<<This is causing trouble: it is making api.js querying url http://localhost:8080/contest/api/contests/3
+      `contest/${contestID}`
     );
 
-    this.setState({
-      pageHeader: this.state.contests[contestID].contestName,
-      currentContestID: contestID
+    //fetch contest data from api call (gets a axios promise), then when contest is ready, 
+    api.fetchContest(contestID).then(contest => {
+      this.setState({
+        pageHeader: contest.contestName,
+        currentContestID: contest.id,
+        //modify the contests object, copy the current contest, but change the object assoicated with id to the new contest object from server api call (with description)
+        contests: {
+          ...this.state.contests,
+          [contest.id]: contest   ///???
+        }
+      });
     });
-  }
+  };
 
   //if currentContestID is empty, display initial full list. 
-  //if clicked on individual contest, display the contest
+  //if clicked on individual contest, display the single contest
   currentContent(){
     if(this.state.currentContestID == null){
       return (
