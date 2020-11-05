@@ -43,7 +43,8 @@ class App extends React.Component {
   fetchContest = (contestID) => {
     pushState(
       { currentContestID: contestID },  //save the ID received in browser.history.state
-      // `/contest/${contestID}`  //url  <<<This is causing trouble: it is making api.js querying url http://localhost:8080/contest/api/contests/3
+      // This is causing trouble: it is making api.js querying url http://localhost:8080/contest/api/contests/3.
+      //<<---FIXED, in api.js, missed / before 'api/contests/...'
       `contest/${contestID}`
     );
 
@@ -60,6 +61,11 @@ class App extends React.Component {
       });
     });
   };
+
+
+  currentContest(){
+    
+  }
 
   //if currentContestID is empty, display initial full list. 
   //if clicked on individual contest, display the single contest
