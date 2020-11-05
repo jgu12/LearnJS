@@ -15,10 +15,11 @@ server.use(sassMiddleware({
 //render ejs template
 server.set('view engine', 'ejs');
 
-import serverRender from './serverRender'; //just to call the function
+import serverRender from './serverRender';
 
-server.get('/', (req, res) => {
-  serverRender()
+server.get(['/', '/contest/:contestId'], (req, res) => {
+  let contestId = req.params.contestId; //if on contest page, id is the number in url. if on home page, it's undefined
+  serverRender(contestId)
     .then(({initialData, initialMarkup}) => {
       res.render('index', {initialData, initialMarkup});  //pass both to EJS
     })
@@ -30,16 +31,16 @@ server.get('/', (req, res) => {
   // });
 });
 
-//>>>>>using express static middleware
-//serve static assest automatically
-//*in production, static content usually should be managed sepearted from server code, using tools like NGINX
-server.use(express.static('public'));
-
 //manage all api requests in api module, import the handler here and use with express middleware
 //the order does matter here, if route handling is below server.listen(), then ejs tempalte doesn't work
 import apiRouter from './api';
 server.use('/api', apiRouter);
 
+
+//>>>>>using express static middleware
+//serve static assest automatically
+//*in production, static content usually should be managed sepearted from server code, using tools like NGINX
+server.use(express.static('public'));
 
 server.listen(config.port,  config.host, () => {
   console.info('express is listening on port: ', config.port);

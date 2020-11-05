@@ -65,6 +65,6 @@ import App from './components/App';
 
 //render an app component to 'root' div on DOM
 ReactDom.render(
-  <App initialContests={window.initialData.contests} contests={[]}/>,
+  <App initialData={window.initialData} contests={[]}/>,
   document.getElementById('root')
 );
