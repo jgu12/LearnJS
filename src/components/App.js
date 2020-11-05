@@ -15,10 +15,7 @@ const pushState = (obj, url) => {
 
 //if need state & lifecyle, extend react.component
 class App extends React.Component {
-  state = {
-    pageHeader: 'Naming Contests',
-    contests: this.props.initialContests  //
-  };
+  state = this.props.initialData;
 
   //usually do ajax fetching, when got something back from the server, 
   //we are sure we have the target in dom to modify
@@ -45,13 +42,13 @@ class App extends React.Component {
       { currentContestID: contestID },  //save the ID received in browser.history.state
       // This is causing trouble: it is making api.js querying url http://localhost:8080/contest/api/contests/3.
       //<<---FIXED, in api.js, missed / before 'api/contests/...'
-      `contest/${contestID}`
+      `/contest/${contestID}`
     );
 
     //fetch contest data from api call (gets a axios promise), then when contest is ready, 
     api.fetchContest(contestID).then(contest => {
       this.setState({
-        pageHeader: contest.contestName,
+        // pageHeader: contest.contestName,
         currentContestID: contest.id,
         //modify the contests object, copy the current contest, but change the object assoicated with id to the new contest object from server api call (with description)
         contests: {
@@ -62,9 +59,15 @@ class App extends React.Component {
     });
   };
 
-
+  //refactor
   currentContest(){
-    
+    return this.state.contests[this.state.currentContestID];
+  }
+  pageHeader(){
+    if(this.state.currentContestID) {
+      return this.currentContest().contestName;
+    }
+    return 'Naming Contests';
   }
 
   //if currentContestID is empty, display initial full list. 
@@ -79,7 +82,7 @@ class App extends React.Component {
       );
     } else {
       return (
-        <Contest {...this.state.contests[this.state.currentContestID]}/>
+        <Contest {...this.currentContest()}/>
       );
     }
   }
@@ -89,7 +92,7 @@ class App extends React.Component {
     //pass the fetchContest func all the way to ContestPreview for its onClick
     return ( 
       <div className="App">
-        <Header message={this.state.pageHeader} />
+        <Header message={this.pageHeader()} />
         {this.currentContent()}
       </div>
     );
@@ -98,7 +101,8 @@ class App extends React.Component {
 
 App.propTypes = {
   contests: PropTypes.array,
-  initialContests: PropTypes.object
+  initialContests: PropTypes.object,
+  initialData: PropTypes.object.isRequired
 };
 
 export default App;

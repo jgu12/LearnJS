@@ -30,16 +30,16 @@ server.get('/', (req, res) => {
   // });
 });
 
-//>>>>>using express static middleware
-//serve static assest automatically
-//*in production, static content usually should be managed sepearted from server code, using tools like NGINX
-server.use(express.static('public'));
-
 //manage all api requests in api module, import the handler here and use with express middleware
 //the order does matter here, if route handling is below server.listen(), then ejs tempalte doesn't work
 import apiRouter from './api';
 server.use('/api', apiRouter);
 
+
+//>>>>>using express static middleware
+//serve static assest automatically
+//*in production, static content usually should be managed sepearted from server code, using tools like NGINX
+server.use(express.static('public'));
 
 server.listen(config.port,  config.host, () => {
   console.info('express is listening on port: ', config.port);

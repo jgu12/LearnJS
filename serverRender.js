@@ -17,7 +17,7 @@ const serverRender = () =>
       return {
         initialData: resp.data,     //the api returns an object, in the resp object's data field: resp.data
         initialMarkup: ReactDOMServer.renderToString(
-          <App initialContests={resp.data.contests}/>
+          <App initialData={resp.data}/>
         )
       };
     });
