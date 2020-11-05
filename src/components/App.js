@@ -34,6 +34,19 @@ class App extends React.Component {
     //   });
   }
 
+  //go back to home contest list page
+  fetchContestList = () => {
+    pushState(
+      { currentContestID: null },
+      '/'
+    );
+    api.fetchContestList().then(contests => {
+      this.setState({
+        currentContestID: null,
+        contests
+      });
+    });
+  };
 
   //use for everytime we click on a contest. Pass the func all the way to ContestPreview,
   //onClick calls the func & pass in the clicked contest-id, save the id back id
@@ -82,7 +95,10 @@ class App extends React.Component {
       );
     } else {
       return (
-        <Contest {...this.currentContest()}/>
+        <Contest 
+          contestListClick={this.fetchContestList}
+          {...this.currentContest()}
+        />
       );
     }
   }
