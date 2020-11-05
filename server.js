@@ -17,8 +17,9 @@ server.set('view engine', 'ejs');
 
 import serverRender from './serverRender';
 
-server.get('/', (req, res) => {
-  serverRender()
+server.get(['/', '/contest/:contestId'], (req, res) => {
+  let contestId = req.params.contestId; //if on contest page, id is the number in url. if on home page, it's undefined
+  serverRender(contestId)
     .then(({initialData, initialMarkup}) => {
       res.render('index', {initialData, initialMarkup});  //pass both to EJS
     })
