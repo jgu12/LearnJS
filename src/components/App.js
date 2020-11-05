@@ -12,6 +12,9 @@ const pushState = (obj, url) => {
   window.history.pushState(obj, '', url);
 };
 
+const onPopState = handler => {
+  window.onpopstate = handler;
+};
 
 //if need state & lifecyle, extend react.component
 class App extends React.Component {
@@ -20,18 +23,32 @@ class App extends React.Component {
   //usually do ajax fetching, when got something back from the server, 
   //we are sure we have the target in dom to modify
   //also timers, listeners.. and clean up in componentWillUnmount
+  // componentDidMount() {
+  //ajax call to fetch data from remote API - using axios library - now returns an object
+  // axios.get('/api/contests')
+  //   .then( resp => {
+  //     console.log('getting resp object -- inside App componetDidMount cycle', resp);
+  //     this.setState({
+  //       contests: resp.data.contests
+  //     });
+  //   }) 
+  //   .catch(function(error) {
+  //     console.error(error);
+  //   });
+  // }
+
   componentDidMount() {
-    //ajax call to fetch data from remote API - using axios library - now returns an object
-    // axios.get('/api/contests')
-    //   .then( resp => {
-    //     console.log('getting resp object -- inside App componetDidMount cycle', resp);
-    //     this.setState({
-    //       contests: resp.data.contests
-    //     });
-    //   }) 
-    //   .catch(function(error) {
-    //     console.error(error);
-    //   });
+    onPopState( (event) => {
+      // console.log(event);
+      this.setState({
+        currentContestID: (event.state || {}).currentContestID
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    //need to clear func regsitered in component did mount
+    onPopState(null);
   }
 
   //go back to home contest list page
