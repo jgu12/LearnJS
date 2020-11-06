@@ -3,6 +3,8 @@ const env = process.env;
 export const nodeEnv = env.NODE_ENV || 'dev';
 
 export default {
+  //mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+  mongodbUri: 'mongodb://localhost:27017/test',
   port: env.PORT || 8080,
   host: env.HOST || '0.0.0.0',
   get serverUrl() {
