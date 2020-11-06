@@ -46,6 +46,27 @@ router.get('/contests/:contestId', (req, res) => {
 });
 
 
+router.get('/names/:nameIds', (req, res) => {
+  //req.params.nameIds.split(',').map(Number)  -> gives [101,102]
+  const nameIds = req.params.nameIds.split(',').map(Number);
+  let names = {};
+  mdb.collection('names').find({ id: {$in: nameIds}})
+    .each((err, name) => {
+
+      assert.strictEqual(null, err);
+
+      if(!name) {
+        //return when no more contest
+        res.send({names}); //return an object by wrapping {}
+        return;
+      }
+
+      names[name.id] = name;
+    });
+});
+
+
+
 export default router;
 
 
