@@ -89,6 +89,27 @@ class App extends React.Component {
     });
   };
 
+  //just call api, takes an name ID array
+  //api call gives back a names object, save the objec to state
+  fetchNames = (nameIds) => {
+    if(nameIds.length === 0){
+      return;
+    }
+    api.fetchNames(nameIds).then(names => {
+      this.setState({
+        names
+      });
+    });
+  }
+
+  //look up the names by ID once names is in state
+  lookupName = (nameId) => {
+    if(!this.state.names || !this.state.names[nameId]){
+      return {name: '...'};
+    }
+    return this.state.names[nameId]; //object {"nameId" : {"id":"", "name":"", "timestamp": ".."}}
+  }
+
   //refactor
   currentContest(){
     return this.state.contests[this.state.currentContestID];
@@ -114,6 +135,8 @@ class App extends React.Component {
       return (
         <Contest 
           contestListClick={this.fetchContestList}
+          fetchNames={this.fetchNames}
+          lookupName={this.lookupName}
           {...this.currentContest()}
         />
       );

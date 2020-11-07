@@ -1,6 +1,6 @@
 //using mongodb
 import express from 'express';
-import {MongoClient} from 'mongodb';
+import { MongoClient } from 'mongodb';
 import assert from 'assert';
 import config from '../config';
 
@@ -8,7 +8,7 @@ import config from '../config';
 let mdb;
 MongoClient.connect(config.mongodbUri, (err, client) => {
   assert.strictEqual(null, err);
-  mdb=client.db('test');
+  mdb = client.db('test');
 });
 
 const router = express.Router();
@@ -25,9 +25,9 @@ router.get('/contests', (req, res) => {
 
       assert.strictEqual(null, err);
 
-      if(!contest) {
+      if (!contest) {
         //return when no more contest
-        res.send({contests}); //return an object by wrapping {}
+        res.send({ contests }); //return an object by wrapping {}
         return;
       }
 
@@ -37,7 +37,7 @@ router.get('/contests', (req, res) => {
 
 router.get('/contests/:contestId', (req, res) => {
   mdb.collection('contests')
-    .findOne({id: Number(req.params.contestId)})
+    .findOne({ id: Number(req.params.contestId) })
     .then(contest => {
       // console.log('RESP:', contest);
       res.send(contest);
@@ -50,19 +50,21 @@ router.get('/names/:nameIds', (req, res) => {
   //req.params.nameIds.split(',').map(Number)  -> gives [101,102]
   const nameIds = req.params.nameIds.split(',').map(Number);
   let names = {};
-  mdb.collection('names').find({ id: {$in: nameIds}})
-    .each((err, name) => {
+  setTimeout(function () {  //timeout to simulate slow api 
+    mdb.collection('names').find({ id: { $in: nameIds } })
+      .each((err, name) => {
 
-      assert.strictEqual(null, err);
+        assert.strictEqual(null, err);
 
-      if(!name) {
-        //return when no more contest
-        res.send({names}); //return an object by wrapping {}
-        return;
-      }
+        if (!name) {
+          //return when no more contest
+          res.send({ names }); //return an object by wrapping {}
+          return;
+        }
 
-      names[name.id] = name;
-    });
+        names[name.id] = name;
+      });
+  }, 3000);
 });
 
 

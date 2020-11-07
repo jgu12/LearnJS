@@ -13,3 +13,9 @@ export const fetchContestList = () => {
   return axios.get('/api/contests')
     .then(resp => resp.data.contests);  //also return the data from resp?? same as resp => resp.data?? function(resp){return resp.data}
 };
+
+//nameIds is an array, use join() to join make it meets the api syntax "..names/100,102,103"
+export const fetchNames = (nameIds) => {
+  return axios.get(`/api/names/${nameIds.join(',')}`)
+    .then(resp => resp.data.names);
+};
