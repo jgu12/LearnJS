@@ -2,6 +2,13 @@
 ## https://www.linkedin.com/learning/learning-full-stack-javascript-development-mongodb-node-and-react
 
 
+####  launch mongodb: brew services start mongodb-community@4.4
+####  kill mongodb: brew services stop mongodb-community@4.4
+####  load sample data to mongo: 
+####      babel-node loadTestData.js 
+####      babel-node updateTestData.js - replace id with mongodb ObjectId _id
+####  delete: db.**.drop()
+
 
 Other things to try:
 test - mocha, selenium, puppeteer
