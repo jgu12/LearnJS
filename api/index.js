@@ -66,6 +66,41 @@ router.get('/names/:nameIds', (req, res) => {
   }, 1000);
 });
 
+router.post('/names', (req, res) => {
+  //req.body would be json object, use body-parser middleware to parse
+  // res.send(req.body);
+  // api structure: 
+  // {
+  // 	"newName": "a new name",
+  // 	"contestId": "asdadsafdsaf"
+  // }
+  const contestId = ObjectID(req.body.contestId);
+  const name = req.body.newName;
+  //usually validate req ...
+  //..
+  console.log('incoming request', req.body);
+  //return insert name
+  mdb.collection('names').insertOne({name}).then(result => {
+    mdb.collection('contests').findOneAndUpdate(
+      {_id: contestId},
+      { $push: { nameIds: result.insertedId} },
+      { returnOriginal: false }  //this is node option, can return the new doc, so that in addName() setState, it updates the state and makes the contest component to refresh
+      // { returnNewDocument: true }   //this is mongo shell option, still returns the old doc.
+      //https://stackoverflow.com/questions/35626040/findoneandupdate-used-with-returnnewdocumenttrue-returns-the-original-document
+    ).then(doc => 
+      res.send({
+        updatedContest: doc.value,      //response is not sending back the upadted doc, but the old doc. ReturnNewDocument not correct?
+        newName: { _id: result.insertedId, name}
+      }))
+      .catch( error => {
+        console.error(error);
+        res.status(404).send('Bad Request');
+      });
+  });
+  //update contest
+  //
+});
+
 
 
 export default router;

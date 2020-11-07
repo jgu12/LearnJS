@@ -4,6 +4,9 @@ import config from './config';
 import express from 'express';
 const server = express();
 
+import bodyParser from 'body-parser';
+server.use(bodyParser.json());
+
 // using node sass middleware, read form ../sass and output a style.css to ../public
 import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
