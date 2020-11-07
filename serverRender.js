@@ -21,9 +21,9 @@ const getApiUrl = contestID => {
 const getInitialData = (contestID, apiData) => {
   if(contestID){
     return {
-      currentContestID : apiData.id,  //currentContestID needs to match the one in App.js pushstate() ???
+      currentContestID : apiData._id,  //currentContestID needs to match the one in App.js pushstate() ???
       contests: {
-        [apiData.id]: apiData  //represents a single contest
+        [apiData._id]: apiData  //represents a single contest
       } 
     };
   }

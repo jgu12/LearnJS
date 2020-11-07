@@ -5,7 +5,7 @@ class ContestPreview extends React.Component {
 
   handleClick = () => {
     // console.log(this.props.contestName);
-    this.props.onClick(this.props.id);
+    this.props.onClick(this.props._id);
   }
 
   render() {
@@ -17,9 +17,9 @@ class ContestPreview extends React.Component {
         <div className = 'contest-name'>
           {this.props.contestName}
         </div>
-        <div className = 'contest-id'>
-          {this.props.id}
-        </div>
+        {/* <div className = 'contest-id'>
+          {this.props._id}
+        </div> */}
       </div>
     );
 
@@ -29,7 +29,7 @@ class ContestPreview extends React.Component {
 ContestPreview.propTypes = {
   categoryName: PropTypes.string.isRequired,
   contestName: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  _id: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
 };
 

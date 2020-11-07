@@ -79,11 +79,11 @@ class App extends React.Component {
     api.fetchContest(contestID).then(contest => {
       this.setState({
         // pageHeader: contest.contestName,
-        currentContestID: contest.id,
+        currentContestID: contest._id,
         //modify the contests object, copy the current contest, but change the object assoicated with id to the new contest object from server api call (with description)
         contests: {
           ...this.state.contests,
-          [contest.id]: contest   ///???
+          [contest._id]: contest   ///???
         }
       });
     });

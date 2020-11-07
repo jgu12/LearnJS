@@ -23,9 +23,10 @@ server.get(['/', '/contest/:contestId'], (req, res) => {
     .then(({initialData, initialMarkup}) => {
       res.render('index', {initialData, initialMarkup});  //pass both to EJS
     })
-    .catch(
-      console.error
-    );
+    .catch( error => {
+      console.error(error);
+      res.status(404).send('Bad Request');
+    });
   // res.render('index', {
   //   content: 'Hello from EJS from server.js!!'
   // });

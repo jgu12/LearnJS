@@ -1,6 +1,6 @@
 //using mongodb
 import express from 'express';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectID } from 'mongodb';
 import assert from 'assert';
 import config from '../config';
 
@@ -17,7 +17,6 @@ router.get('/contests', (req, res) => {
   let contests = {};
   mdb.collection('contests').find({})
     .project({
-      id: 1,
       categoryName: 1,
       contestName: 1
     })
@@ -31,13 +30,13 @@ router.get('/contests', (req, res) => {
         return;
       }
 
-      contests[contest.id] = contest;
+      contests[contest._id] = contest;
     });
 });
 
 router.get('/contests/:contestId', (req, res) => {
   mdb.collection('contests')
-    .findOne({ id: Number(req.params.contestId) })
+    .findOne({ _id: ObjectID(req.params.contestId) })
     .then(contest => {
       // console.log('RESP:', contest);
       res.send(contest);
@@ -48,10 +47,10 @@ router.get('/contests/:contestId', (req, res) => {
 
 router.get('/names/:nameIds', (req, res) => {
   //req.params.nameIds.split(',').map(Number)  -> gives [101,102]
-  const nameIds = req.params.nameIds.split(',').map(Number);
+  const nameIds = req.params.nameIds.split(',').map(ObjectID);
   let names = {};
   setTimeout(function () {  //timeout to simulate slow api 
-    mdb.collection('names').find({ id: { $in: nameIds } })
+    mdb.collection('names').find({ _id: { $in: nameIds } })
       .each((err, name) => {
 
         assert.strictEqual(null, err);
@@ -62,9 +61,9 @@ router.get('/names/:nameIds', (req, res) => {
           return;
         }
 
-        names[name.id] = name;
+        names[name._id] = name;
       });
-  }, 3000);
+  }, 1000);
 });
 
 
